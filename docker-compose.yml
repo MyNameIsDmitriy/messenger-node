@@ -1,0 +1,23 @@
+# Use root/example as user/password credentials
+version: "3.1"
+
+services:
+  db:
+    container_name: mysql_cont
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - 3306:3306
+
+  adminer:
+    container_name: adminer_cont
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
